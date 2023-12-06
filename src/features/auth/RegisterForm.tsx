@@ -1,14 +1,16 @@
 import { FieldValues, useForm } from "react-hook-form";
-import { Divider, Form, Label } from "semantic-ui-react";
+import { Form, Button, Label } from "semantic-ui-react";
 import ModalWrapper from "../../app/common/modals/ModalWrapper";
 import { useAppDispatch } from "../../app/store/store";
 import { closeModal } from "../../app/common/modals/modalSlice";
-import { Button } from "semantic-ui-react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../app/config/firebase";
-import SocialLogin from "./SocialLogin";
+import { signIn } from "./authSlice";
+import { useFireStore } from "../../app/hooks/firestore/useFirestore";
+import { Timestamp } from "firebase/firestore";
 
-export default function LoginForm() {
+export default function RegisterForm() {
+  const {set} = useFireStore('profiles');
   const {register, handleSubmit, setError, formState: {isSubmitting, isValid, isDirty, errors}} = useForm({
     mode: 'onTouched'
   })
@@ -16,18 +18,33 @@ export default function LoginForm() {
 
   async function onSubmit(data: FieldValues) {
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      const userCreds = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      await updateProfile(userCreds.user, {
+        displayName: data.displayName
+      })
+      await set(userCreds.user.uid, {
+        displayName: data.displayName,
+        email: data.email,
+        createdAt: Timestamp.now()
+      })
+      dispatch(signIn(userCreds.user));
       dispatch(closeModal());
     } catch (error: any) {
         setError('root.serverError', {
           type: '400', message: error.message
-      })
+        })
     }
   }
 
   return (
-    <ModalWrapper header='Sign into re-vents' size='mini'>
+    <ModalWrapper header='Register to RE-vents'>
       <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form.Input
+          defaultValue=''
+          placeholder='Display name'
+          {...register('displayName', {required: true})}
+          error={errors.displayName && 'Display name is required'}
+        />
         <Form.Input
           defaultValue=''
           placeholder='Email address'
@@ -42,7 +59,9 @@ export default function LoginForm() {
           defaultValue=''
           placeholder='Password'
           {...register('password', {required: true})}
-          error={errors.password && 'Password is required'}
+          error={
+            errors.password && 'Password is required'
+          }
         />
         {errors.root && (
           <Label
@@ -58,10 +77,8 @@ export default function LoginForm() {
           fluid
           size='large'
           color='teal'
-          content='Login'
+          content='Register'
         />
-        <Divider horizontal>Or</Divider>
-        <SocialLogin />
       </Form>
     </ModalWrapper>
   )
