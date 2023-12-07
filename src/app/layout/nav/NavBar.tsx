@@ -24,7 +24,7 @@ export default function NavBar() {
         <Container>
             <MenuItem header as={NavLink} to='/'>
                 <img src="/logo.png" alt="logo" />
-                RE-vents
+                EventHub
             </MenuItem>
             <MenuItem name='Events' as={NavLink} to='/events' />
             <MenuItem name='Scratch' as={NavLink} to='/scratch' />
