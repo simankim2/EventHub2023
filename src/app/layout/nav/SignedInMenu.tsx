@@ -17,7 +17,7 @@ export default function SignedInMenu() {
     <Menu.Item position='right'>
       <Image avatar spaced='right' src={currentUser?.photoURL || '/user.png'} />
       <Dropdown pointing='top left' text={currentUser?.displayName as string}>
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{zIndex: 2}}>
           <Dropdown.Item as={Link} to='/createEvent' text='Create event' icon='plus' />
           <Dropdown.Item as={Link} to={`/profiles/${currentUser?.uid}`} text='My profile' icon='user' />
           <Dropdown.Item as={Link} to='/account' text='My account' icon='settings' />
