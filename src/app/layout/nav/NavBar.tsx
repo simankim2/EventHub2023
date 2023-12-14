@@ -3,21 +3,10 @@ import { NavLink } from 'react-router-dom'
 import SignedInMenu from './SignedInMenu';
 import SignedOutButtons from './SignedOutButtons';
 import { useAppSelector } from '../../store/store';
-import { doc, setDoc } from 'firebase/firestore';
-import { sampleData } from '../../api/sampleData';
-import { db } from '../../config/firebase';
+
 
 export default function NavBar() {
   const {authenticated} = useAppSelector(state => state.auth)
-
-  function seedData() {
-    sampleData.forEach(async event => {
-      const {id, ...rest} = event;
-      await setDoc(doc(db, 'events', id), {
-        ...rest
-      })
-    })
-  }
 
   return (
     <Menu inverted={true} fixed='top'>
@@ -37,16 +26,6 @@ export default function NavBar() {
                     inverted={true}
                     content='Create event' />
             </MenuItem>
-            {import.meta.env.DEV && (
-              <MenuItem>
-                <Button
-                  inverted={true}
-                  color='teal'
-                  content='Seed data'
-                  onClick={seedData}
-                />
-              </MenuItem>
-            )}
             {authenticated ? <SignedInMenu /> : <SignedOutButtons />}
         </Container>
     </Menu>

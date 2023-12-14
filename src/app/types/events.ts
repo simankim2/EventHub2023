@@ -5,15 +5,19 @@ export type AppEvent = {
     category: string
     description: string
     city: string
+    hostUid: string
     venue: string
     hostedBy: string
     hostPhotoURL: string
     isCanceled: boolean
     attendees: Attendee[]
+    attendeeIds: string[]
+    isHost?: boolean
+    isGoing?: boolean
 }
 
 export type Attendee = {
     id: string
-    name: string
+    displayName: string
     photoURL: string
 }
