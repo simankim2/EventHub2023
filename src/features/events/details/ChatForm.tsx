@@ -40,7 +40,7 @@ export default function ChatForm({eventId, parentId, setReplyForm}: Props) {
     <Form>
       <Form.TextArea
         {...register('comment', {required: true})}
-        placeholder='Enter youro comment (Enter to submit, SHIFT + Enter to add new line)'
+        placeholder='Enter your comment (Enter to submit, SHIFT + Enter to add new line)'
         onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
           if (e.key === 'Enter' && e.shiftKey) {
             return;
