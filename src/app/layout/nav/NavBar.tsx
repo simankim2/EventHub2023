@@ -12,7 +12,7 @@ export default function NavBar() {
     <Menu inverted={true} fixed='top'>
         <Container>
             <MenuItem header as={NavLink} to='/'>
-                <img src="/logo.png" alt="logo" />
+                <img src="/logo.png" style={{ marginRight: '20px' }} alt="logo" />
                 EventHub
             </MenuItem>
             <MenuItem name='Events' as={NavLink} to='/events' />
