@@ -7,6 +7,7 @@ import EventFilters from "./EventFilters";
 import { QueryOptions } from "../../../app/hooks/firestore/types";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
 import { Grid } from "semantic-ui-react";
+import EmptyState from "../../../app/layout/EmptyState";
 
 
 export default function EventDashboard() {
@@ -49,14 +50,18 @@ export default function EventDashboard() {
             <EventListItemPlaceholder />
           </>
         ) : (
-        <>
-          <EventList
-            events={events}
-            hasMore={hasMore.current}
-            loadMore={loadMore}
-            loading={status === 'loading'}
-          />
-        </>
+          <>
+            {events.length === 0 ? (
+              <EmptyState />
+            ) : (
+              <EventList
+                events={events}
+                hasMore={hasMore.current}
+                loadMore={loadMore}
+                loading={status === 'loading'}
+              />
+            )}
+          </>
         )}
       </Grid.Column>
       <Grid.Column width={6}>
