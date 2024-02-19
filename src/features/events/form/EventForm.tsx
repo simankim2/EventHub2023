@@ -53,7 +53,7 @@ export default function EventForm() {
         photoURL: currentUser.photoURL
       }),
       attendeeIds: arrayUnion(currentUser.uid),
-      date: Timestamp.fromDate(data.date as unknown as Date)
+      date: Timestamp.fromDate(data.date as unknown as Date),
     })
     return ref;
   }
@@ -89,7 +89,7 @@ export default function EventForm() {
             <Form.Input
               placeholder='Event title'
               defaultValue={event?.title || ''}
-              {...register('title', {required: 'Title is required'})}
+              {...register('title', {required: true})}
               error={errors.title && errors.title.message}
             />
             <Controller

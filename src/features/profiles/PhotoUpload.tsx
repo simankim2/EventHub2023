@@ -23,7 +23,7 @@ type Props = {
 export default function PhotoUpload({profile, setEditMode}: Props) {
   const [files, setFiles] = useState<any>([]);
     const {update} = useFireStore('profiles');
-    const {set} = useFireStore(`profiles/${auth.currentUser?.uid}/photos`)
+    const {set} = useFireStore(`profiles/${auth.currentUser?.uid}/photos`);
 
   return (
     <FilePond

@@ -15,7 +15,7 @@ type Props = {
   profile: Profile
 }
 
-export default function ProfilePhotos({profile}: Props) {
+export default function ProfilePhotos({ profile }: Props) {
   const [editMode, setEditMode] = useState(false);
   const isCurrentUser = auth.currentUser?.uid === profile.id;
   const {data: photos, status} = useAppSelector(state => state.photos)
@@ -27,9 +27,6 @@ export default function ProfilePhotos({profile}: Props) {
 
   async function handleSetMain(photo: Photo) {
     await batchSetPhoto(photo.url);
-    await updateProfile(auth.currentUser!, {
-      photoURL: photo.url
-    });
     await updateProfile(auth.currentUser!, {
       photoURL: photo.url
     })
