@@ -48,19 +48,19 @@ export default function ProfilePhotos({ profile }: Props) {
         <Grid.Column width={16}>
           <Header floated='left' icon='photo' content='Photos' />
           {isCurrentUser &&
-          <Button
-            floated='right'
-            basic
-            content={editMode ? 'Cancel' : 'Add photo'}
-            onClick={() => setEditMode(!editMode)}
-          />}
+            <Button
+              floated='right'
+              basic
+              content={editMode ? 'Cancel' : 'Add photo'}
+              onClick={() => setEditMode(!editMode)}
+            />}
         </Grid.Column>
         <Grid.Column width = {16}>
           {editMode ? <PhotoUpload profile={profile} setEditMode={setEditMode} /> : (
             <Card.Group itemsPerRow={5}>
               {photos.map(photo => (
                 <Card key={photo.id}>
-                  <Image src={photo.url} />
+                  <Image src={photo.url}/>
                   {isCurrentUser &&
                     <Button.Group>
                       <Button
